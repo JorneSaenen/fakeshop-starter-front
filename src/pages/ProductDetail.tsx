@@ -13,8 +13,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { useUser } from "@clerk/clerk-react"
 
 export function ProductDetail() {
+  const { isSignedIn } = useUser()
   const { id } = useParams<{ id: string }>()
   const { data: product, isLoading, error } = useGetProductByIdQuery(id || "")
   const [addToCart] = useAddToCartMutation()
@@ -109,7 +111,9 @@ export function ProductDetail() {
                 </div>
 
                 {/* Add to Cart Button */}
-                <Button onClick={handleAddToCart}>Add to Cart</Button>
+                <Button disabled={!isSignedIn} onClick={handleAddToCart}>
+                  Add to Cart
+                </Button>
               </div>
             </div>
 
