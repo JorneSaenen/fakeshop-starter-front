@@ -17,8 +17,9 @@ export function Home() {
               </Link>
             </div>
           </div>
-          <div className="flex aspect-[4/3] items-center justify-center rounded-lg bg-gray-200">
-            <span className="text-lg text-gray-500">Hero Image</span>
+          <div className="flex aspect-[4/3] items-center justify-center rounded-lg">
+            {/* <span className="text-lg text-gray-500">Hero Image</span> */}
+            <img src="/hero.jpg" alt="Hero Image" className="rounded shadow-2xl" />
           </div>
         </div>
       </section>
