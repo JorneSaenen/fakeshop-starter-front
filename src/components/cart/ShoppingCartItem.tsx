@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Trash2, Minus, Plus } from "lucide-react"
 import { CartItem } from "@/lib/types"
 import { useRemoveFromCartMutation, useUpdateCartItemMutation } from "@/store/apiSlice"
+
 interface Props {
   item: CartItem
 }
@@ -39,10 +40,11 @@ export function ShoppingCartItem({ item }: Props) {
               variant="ghost"
               size="icon"
               className="h-7 w-7 rounded-none"
-              onClick={() => {
-                if (item.quantity === 1) return removeFromCart(item._id)
-                updateCartItem({ id: item._id, quantity: item.quantity - 1 })
-              }}
+              onClick={() =>
+                item.quantity > 1
+                  ? updateCartItem({ id: item._id, quantity: item.quantity - 1 })
+                  : removeFromCart(item._id)
+              }
             >
               <Minus className="h-3 w-3" />
               <span className="sr-only">Decrease</span>

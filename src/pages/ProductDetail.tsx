@@ -1,8 +1,7 @@
 import { useParams, Link } from "react-router"
-import { useGetProductByIdQuery } from "@/store/apiSlice"
+import { useGetProductByIdQuery, useAddToCartMutation } from "@/store/apiSlice"
 import { formatCurrency } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { useAddToCartMutation } from "@/store/apiSlice"
 import { useState } from "react"
 import { Minus, Plus } from "lucide-react"
 import {
@@ -13,15 +12,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { useUser } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/clerk-react"
 
 export function ProductDetail() {
-  const { isSignedIn } = useUser()
   const { id } = useParams<{ id: string }>()
   const { data: product, isLoading, error } = useGetProductByIdQuery(id || "")
-  const [addToCart] = useAddToCartMutation()
   const [quantity, setQuantity] = useState(1)
-
+  const [addToCart] = useAddToCartMutation()
+  const { isSignedIn } = useAuth()
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">

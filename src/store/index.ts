@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
-
 import apiSlice from "./apiSlice"
 
 export const store = configureStore({
@@ -8,10 +7,7 @@ export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }).concat(apiSlice.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiSlice.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

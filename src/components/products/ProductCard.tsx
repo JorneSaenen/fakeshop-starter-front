@@ -4,14 +4,16 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { formatCurrency } from "@/lib/utils"
 import { useAddToCartMutation } from "@/store/apiSlice"
 import { Link } from "react-router"
-import { useUser } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/clerk-react"
+
 interface ProductCardProps {
   product: Product
 }
 
 export function ProductCard({ product }: ProductCardProps) {
   const [addToCart] = useAddToCartMutation()
-  const { isSignedIn } = useUser()
+  const { isSignedIn } = useAuth()
+
   return (
     <Card className="grid h-full grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden rounded-lg border">
       <CardHeader className="p-0">

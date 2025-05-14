@@ -1,24 +1,27 @@
 import { ShoppingCartIcon, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react"
+import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from "@clerk/clerk-react"
 import { Link, NavLink } from "react-router"
-import { ShoppingCart } from "./ShoppingCart"
+import { ShoppingCart } from "./cart/ShoppingCart"
 import { useMemo, useState } from "react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
 import { useGetCartQuery } from "@/store/apiSlice"
 
 export function NavBar() {
+  const { isSignedIn } = useAuth()
   const { data: cart = [] } = useGetCartQuery()
   const cartCount = useMemo(() => cart.reduce((acc, item) => acc + item.quantity, 0), [cart])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+  const authenticatedNavigationLinks = [{ to: "/orders", label: "Orders" }]
   const navigationLinks = [
     { to: "/", label: "Home" },
     { to: "/shop", label: "Shop" },
     { to: "/categories", label: "Categories" },
+    ...(isSignedIn ? authenticatedNavigationLinks : []),
   ]
 
   return (
@@ -104,6 +107,7 @@ export function NavBar() {
           </CollapsibleContent>
         </Collapsible>
       </div>
+
       <ShoppingCart isOpen={isCartOpen} onOpenChange={setIsCartOpen} />
     </>
   )

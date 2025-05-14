@@ -7,12 +7,27 @@ export interface Product {
 }
 
 export interface CartItem {
+  _id: string
   productId: Product
   quantity: number
   userId: string
-  _id: string
 }
 
-export interface Checkout {
+export interface CheckoutResponse {
   url: string
 }
+
+interface OrderBaseType<T> {
+  _id: string
+  userId: string
+  products: {
+    productId: T
+    quantity: number
+  }[]
+  status: "confirmed" | "paid" | "shipped" | "delivered" | "cancelled"
+  createdAt: string
+  updatedAt: string
+}
+
+export type Order = OrderBaseType<string>
+export type OrderWithProduct = OrderBaseType<Product>

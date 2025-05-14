@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router"
 import Home from "./pages/Home"
 import Shop from "./pages/Shop"
 import ProductDetail from "./pages/ProductDetail"
+import Orders from "./pages/Orders"
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/categories" element={<ComingSoon title="Categories" />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </Layout>
   )
