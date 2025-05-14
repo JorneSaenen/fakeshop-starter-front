@@ -71,15 +71,19 @@ export function OrderDetails({ orderId, open, onOpenChange }: OrderDetailsProps)
               <Separator />
               <div className="space-y-4">
                 <h3 className="font-medium">Order Items</h3>
-                {order.products.map((item, index: number) => (
-                  <OrderItem
-                    key={index}
-                    title={item.productId.title}
-                    image={item.productId.images[0]}
-                    quantity={item.quantity}
-                    price={item.productId.price}
-                  />
-                ))}
+                <ScrollArea className="h-[300px] pr-4">
+                  <div className="space-y-4">
+                    {order.products.map((item, index: number) => (
+                      <OrderItem
+                        key={index}
+                        title={item.productId.title}
+                        image={item.productId.images[0]}
+                        quantity={item.quantity}
+                        price={item.productId.price}
+                      />
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
               <Separator />
               <div className="text-right">
