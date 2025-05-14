@@ -32,14 +32,14 @@ export function OrderDetails({ orderId, open, onOpenChange }: OrderDetailsProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-h-[90vh] max-w-3xl">
         <DialogHeader>
           <DialogTitle>Order Details</DialogTitle>
           <DialogDescription>
             {/* View detailed information about your order, including items, quantities, and total amount. */}
           </DialogDescription>
         </DialogHeader>
-        <ScrollArea className="max-h-[80vh]">
+        <ScrollArea className="h-[calc(90vh-12rem)]">
           {isLoading ? (
             <div className="space-y-6">
               <Skeleton className="h-8 w-1/3" />
@@ -71,7 +71,7 @@ export function OrderDetails({ orderId, open, onOpenChange }: OrderDetailsProps)
               <Separator />
               <div className="space-y-4">
                 <h3 className="font-medium">Order Items</h3>
-                <ScrollArea className="h-[300px] pr-4">
+                <ScrollArea className="h-[min(300px,calc(60vh-20rem))] min-h-[70px] pr-4">
                   <div className="space-y-4">
                     {order.products.map((item, index: number) => (
                       <OrderItem
