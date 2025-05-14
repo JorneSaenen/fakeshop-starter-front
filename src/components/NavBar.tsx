@@ -14,6 +14,7 @@ export function NavBar() {
   const cartCount = useMemo(() => cart.reduce((acc, item) => acc + item.quantity, 0), [cart])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const navigationLinks = [
     { to: "/", label: "Home" },
     { to: "/shop", label: "Shop" },
@@ -103,7 +104,6 @@ export function NavBar() {
           </CollapsibleContent>
         </Collapsible>
       </div>
-
       <ShoppingCart isOpen={isCartOpen} onOpenChange={setIsCartOpen} />
     </>
   )

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { CartItem, Product } from "@/lib/types"
+import { CartItem, Checkout, Product } from "@/lib/types"
 
 const apiSlice = createApi({
   reducerPath: "api",
@@ -45,6 +45,14 @@ const apiSlice = createApi({
       }),
       invalidatesTags: ["Cart"],
     }),
+    checkout: builder.mutation<Checkout, void>({
+      query: () => ({
+        url: "/checkout/payment",
+        method: "POST",
+        body: {},
+      }),
+      invalidatesTags: ["Cart"],
+    }),
   }),
 })
 
@@ -56,6 +64,7 @@ export const {
   useAddToCartMutation,
   useUpdateCartItemMutation,
   useRemoveFromCartMutation,
+  useCheckoutMutation,
 } = apiSlice
 
 export default apiSlice

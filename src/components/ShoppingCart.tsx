@@ -1,7 +1,7 @@
 import { formatCurrency } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } from "@/components/ui/sheet"
-import { useGetCartQuery } from "@/store/apiSlice"
+import { useCheckoutMutation, useGetCartQuery } from "@/store/apiSlice"
 import { ShoppingCartItem } from "@/components/ShoppingCartItem"
 import { useMemo } from "react"
 
@@ -13,12 +13,14 @@ interface Props {
 export function ShoppingCart({ isOpen, onOpenChange }: Props) {
   const { data: cart = [] } = useGetCartQuery()
   const subtotal = useMemo(() => cart.reduce((acc, item) => acc + item.productId.price * item.quantity, 0), [cart])
-
-  const handleCheckoutClick = () => {
-    // Implement checkout logic here
-    console.log("Checkout clicked")
+  const [checkout] = useCheckoutMutation()
+  const handleCheckoutClick = async () => {
+    const { data } = await checkout()
+    if (data?.url) {
+      window.location.href = data.url
+    }
+    return data
   }
-
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent className="flex w-full flex-col sm:max-w-md">

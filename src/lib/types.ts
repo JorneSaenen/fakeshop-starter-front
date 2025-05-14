@@ -12,3 +12,7 @@ export interface CartItem {
   userId: string
   _id: string
 }
+
+export interface Checkout {
+  url: string
+}
