@@ -76,10 +76,6 @@ const apiSlice = createApi({
       query: userId => `favorites/user/${userId}`,
       providesTags: ["Favorites"],
     }),
-    getFavoritesById: builder.query<Favorite, { id: string }>({
-      query: id => `favorites/${id}`,
-      providesTags: ["Favorites"],
-    }),
   }),
 })
 
@@ -97,7 +93,6 @@ export const {
   useAddFavoriteMutation,
   useRemoveFavoriteMutation,
   useGetFavoritesByUserIdQuery,
-  useGetFavoritesByIdQuery,
 } = apiSlice
 
 export default apiSlice
