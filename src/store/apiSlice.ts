@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { Product, CartItem, CheckoutResponse, Order, OrderWithProduct } from "@/lib/types"
+import { Product, CartItem, CheckoutResponse, Order, OrderWithProduct, Favorite } from "@/lib/types"
 
 const apiSlice = createApi({
   reducerPath: "api",
@@ -10,7 +10,7 @@ const apiSlice = createApi({
       return headers
     },
   }),
-  tagTypes: ["Cart"],
+  tagTypes: ["Cart", "Favorites"],
   endpoints: builder => ({
     getProducts: builder.query<Product[], void>({
       query: () => "products",
@@ -57,6 +57,29 @@ const apiSlice = createApi({
         method: "POST",
       }),
     }),
+    addFavorite: builder.mutation<void, { productId: string; userId: string }>({
+      query: ({ productId, userId }) => ({
+        url: "favorites",
+        method: "POST",
+        body: { productId, userId },
+      }),
+      invalidatesTags: ["Favorites"],
+    }),
+    removeFavorite: builder.mutation<void, Favorite["_id"]>({
+      query: id => ({
+        url: `favorites/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Favorites"],
+    }),
+    getFavoritesByUserId: builder.query<Favorite[], string>({
+      query: userId => `favorites/user/${userId}`,
+      providesTags: ["Favorites"],
+    }),
+    getFavoritesById: builder.query<Favorite, { id: string }>({
+      query: id => `favorites/${id}`,
+      providesTags: ["Favorites"],
+    }),
   }),
 })
 
@@ -71,6 +94,10 @@ export const {
   useUpdateCartItemMutation,
   useRemoveFromCartMutation,
   useCheckoutMutation,
+  useAddFavoriteMutation,
+  useRemoveFavoriteMutation,
+  useGetFavoritesByUserIdQuery,
+  useGetFavoritesByIdQuery,
 } = apiSlice
 
 export default apiSlice

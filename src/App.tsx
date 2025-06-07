@@ -5,6 +5,7 @@ import Home from "./pages/Home"
 import Shop from "./pages/Shop"
 import ProductDetail from "./pages/ProductDetail"
 import Orders from "./pages/Orders"
+import Favorites from "./pages/Favorites"
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/categories" element={<ComingSoon title="Categories" />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </Layout>
   )

@@ -29,5 +29,11 @@ interface OrderBaseType<T> {
   updatedAt: string
 }
 
+export interface Favorite {
+  _id: string
+  productId: Product
+  userId: string
+}
+
 export type Order = OrderBaseType<string>
 export type OrderWithProduct = OrderBaseType<Product>

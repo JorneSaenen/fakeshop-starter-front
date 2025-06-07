@@ -1,8 +1,12 @@
 import { ProductCard } from "./ProductCard"
-import { useGetProductsQuery } from "@/store/apiSlice"
-
+import { useGetFavoritesByUserIdQuery, useGetProductsQuery } from "@/store/apiSlice"
+import { useAuth } from "@clerk/clerk-react"
 export function ProductGrid() {
+  const { isSignedIn, userId } = useAuth()
   const { data: products, isLoading, error } = useGetProductsQuery()
+  const { data: favorites } = useGetFavoritesByUserIdQuery(userId as string, {
+    skip: !isSignedIn,
+  })
 
   if (isLoading) {
     return <div className="py-8 text-center">Loading products...</div>
@@ -20,7 +24,10 @@ export function ProductGrid() {
     <ul className="grid list-none auto-rows-[1fr] grid-cols-1 gap-6 p-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {products.map(product => (
         <li key={product._id}>
-          <ProductCard product={product} />
+          <ProductCard
+            product={product}
+            favoriteId={favorites?.find(favorite => favorite.productId._id === product._id)?._id}
+          />
         </li>
       ))}
     </ul>

@@ -21,6 +21,7 @@ export function NavBar() {
     { to: "/", label: "Home" },
     { to: "/shop", label: "Shop" },
     { to: "/categories", label: "Categories" },
+    { to: "/favorites", label: "Favorites" },
     ...(isSignedIn ? authenticatedNavigationLinks : []),
   ]
 
